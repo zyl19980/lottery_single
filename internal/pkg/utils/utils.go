@@ -16,56 +16,41 @@ import (
 	"time"
 	"unsafe"
 )
-	// 上海时区，全局变量避免重复加载
-	sysTimeLocation = func() *time.Location {
-		loc, err := time.LoadLocation("Asia/Shanghai")
-		if err != nil {
-			loc = time.FixedZone("CST", 8*3600) // 如果加载失败，使用固定时区 UTC+8
-		}
-		return loc
-	}()
-
 
 func NewUuid() string {
 	uuid := uuid2.New()
 	return uuid.String()
 }
 
-// 上海时区，全局变量避免重复加载
-var sysTimeLocation *time.Location
-
-func init() {
-	var err error
-	sysTimeLocation, err = time.LoadLocation("Asia/Shanghai")
-	if err != nil {
-		sysTimeLocation = time.FixedZone("CST", 8*3600) // 如果加载失败，使用固定时区 UTC+8
-	}
-}
 // NowUnix 当前时间戳
 func NowUnix() int {
+	var sysTimeLocation, _ = time.LoadLocation("Asia/Shanghai")
 	return int(time.Now().In(sysTimeLocation).Unix())
 }
 
 // FormatFromUnixTime 将时间戳转为 yyyy-mm-dd H:i:s 格式
 func FormatFromUnixTime(t int64) string {
+	cstSh, _ := time.LoadLocation("Asia/Shanghai") //上海
 	if t > 0 {
-		return time.Unix(t, 0).In(sysTimeLocation).Format(constant.SysTimeFormat)
+		return time.Unix(t, 0).In(cstSh).Format(constant.SysTimeFormat)
 	} else {
-		return time.Now().In(sysTimeLocation).Format(constant.SysTimeFormat)
+		return time.Now().In(cstSh).Format(constant.SysTimeFormat)
 	}
 }
 
 // FormatFromUnixTimeShort 将时间戳转为 yyyy-mm-dd 格式
 func FormatFromUnixTimeShort(t int64) string {
+	cstSh, _ := time.LoadLocation("Asia/Shanghai") //上海
 	if t > 0 {
-		return time.Unix(t, 0).In(sysTimeLocation).Format(constant.SysTimeFormatShort)
+		return time.Unix(t, 0).In(cstSh).Format(constant.SysTimeFormatShort)
 	} else {
-		return time.Now().In(sysTimeLocation).Format(constant.SysTimeFormatShort)
+		return time.Now().In(cstSh).Format(constant.SysTimeFormatShort)
 	}
 }
 
 // ParseTime 将字符串转成时间
 func ParseTime(str string) (time.Time, error) {
+	var sysTimeLocation, _ = time.LoadLocation("Asia/Shanghai")
 	return time.ParseInLocation(constant.SysTimeFormat, str, sysTimeLocation)
 }
 
@@ -163,12 +148,10 @@ func Ip4toInt(ip string) int64 {
 
 // NextDayDuration 得到当前时间到下一天零点的延时
 func NextDayDuration() time.Duration {
-	now := time.Now().In(sysTimeLocation)
-	// 计算今天的最后一秒
-	year, month, day := now.Date()
-	// 直接用今天的日期+1天，避免跨月问题
-	next := time.Date(year, month, day, 0, 0, 0, 0, sysTimeLocation).AddDate(0, 0, 1)
-	return next.Sub(now)
+	year, month, day := time.Now().Add(time.Hour * 24).Date()
+	var sysTimeLocation, _ = time.LoadLocation("Asia/Shanghai")
+	next := time.Date(year, month, day, 0, 0, 0, 0, sysTimeLocation)
+	return next.Sub(time.Now())
 }
 
 // isLittleEndian 判断当前系统中的字节序类型是否是小端字节序
