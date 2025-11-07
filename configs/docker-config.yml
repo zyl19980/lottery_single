@@ -1,0 +1,28 @@
+app:
+  app_name: "lottery-system"
+  version: "v1.0.1"
+  port: 8081
+  run_mode: dev
+
+
+db:
+  addr: "mysql:3306"
+  user: "root"
+  password: "1234"
+  database: "lottery_single"
+  max_idle_conn: 5
+  max_open_conn: 20
+  max_idle_time: 300
+
+log:
+  level: info
+  log_path: ./log
+  file_name: lottery_single.log
+  max_size: 10
+  max_backups: 10
+
+redis:
+  addr: "redis:6379"
+  db: 0
+  password: ""
+  poolsize: 100
