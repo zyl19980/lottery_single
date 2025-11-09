@@ -18,8 +18,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags "-s -w" -o /app/lott
 FROM alpine:3.18
 RUN apk add --no-cache ca-certificates tzdata && \
 	cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-	echo "Asia/Shanghai" > /etc/timezone && \
-	apk del tzdata
+	echo "Asia/Shanghai" > /etc/timezone
 
 WORKDIR /app
 COPY --from=builder /app/lottery /usr/local/bin/lottery
