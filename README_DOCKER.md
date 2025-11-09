@@ -4,7 +4,7 @@ This file explains how to build and run the project with Docker and docker-compo
 
 Prerequisites:
 - Docker and docker-compose installed on the host
-- Ports 8081 (app), 3306 (mysql) and 6379 (redis) available or change mappings in `docker-compose.yml`
+- Ports 8081 (app), 3307 (mysql) and 6379 (redis) available or change mappings in `docker-compose.yml`
 
 Files created:
 - `Dockerfile` - multi-stage image to build the Go binary and create a minimal runtime image

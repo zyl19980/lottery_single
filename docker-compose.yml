@@ -5,6 +5,8 @@ services:
     image: mysql:8.0
     container_name: lottery_mysql
     restart: unless-stopped
+    # 默认使用旧的mysql_native_password 验证插件
+    command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_ROOT_PASSWORD: "1234"
       MYSQL_DATABASE: "lottery_single"
