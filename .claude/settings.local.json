@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat:*)",
+      "Bash(go run:*)",
+      "Bash(docker exec:*)",
+      "Bash(curl:*)",
+      "Bash(for i in {1..5})",
+      "Bash(do curl -s -X POST http://localhost:8081/lottery/v2/get_lucky -H \"Content-Type: application/json\" -d \"{\"\"token\"\":\"\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiJ0ZXN0dXNlciIsIlN0YW5kYXJkQ2xhaW1zIjp7ImV4cCI6MTc2NTk3MjgwMywiaXNzIjoibG90dGVyeSIsIm5iZiI6MTc2NTk2NTYwM319.QSS9nUpP2KV7gyuQYTg7_uBqK7Spn2zFjeixfpRc760\"\",\"\"user_id\"\":1,\"\"ip\"\":\"\"127.0.0.1\"\"}\")",
+      "Bash(done)",
+      "Bash(do echo \"第 $i 次抽奖:\")",
+      "Bash(powershell -ExecutionPolicy Bypass -File test_api.ps1)"
+    ]
+  }
+}
